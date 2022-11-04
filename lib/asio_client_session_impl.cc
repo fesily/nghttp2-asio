@@ -581,6 +581,10 @@ void session_impl::shutdown() {
     return;
   }
 
+  if (!session_) {
+    return;
+  }
+
   nghttp2_session_terminate_session(session_, NGHTTP2_NO_ERROR);
   signal_write();
 }
