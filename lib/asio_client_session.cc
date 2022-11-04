@@ -112,6 +112,10 @@ boost::asio::io_service &session::io_service() const {
   return impl_->io_service();
 }
 
+bool session::stopped() const noexcept{
+  return impl_->stopped();
+}
+
 const request *session::submit(boost::system::error_code &ec,
                                const std::string &method,
                                const std::string &uri, header_map h,

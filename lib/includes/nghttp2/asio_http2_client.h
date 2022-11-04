@@ -233,6 +233,7 @@ public:
                         generator_cb cb, header_map h = header_map{},
                         priority_spec prio = priority_spec()) const;
 
+  bool stopped() const noexcept;
 private:
   std::shared_ptr<session_impl> impl_;
 };
