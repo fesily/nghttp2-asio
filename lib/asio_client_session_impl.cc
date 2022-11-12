@@ -756,10 +756,12 @@ void session_impl::stop() {
 bool session_impl::stopped() const { return stopped_; }
 
 void session_impl::read_timeout(const boost::posix_time::time_duration &t) {
+  assert(t > ping_tick_);
   read_timeout_ = t;
 }
 
 void session_impl::ping_tick(const boost::posix_time::time_duration &t){
+  assert(t < read_timeout_);
   ping_tick_ = t;
 }
 
