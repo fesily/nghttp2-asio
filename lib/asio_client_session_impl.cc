@@ -75,13 +75,19 @@ void session_impl::start_resolve(const std::string &host,
 
   resolver_.async_resolve({host, service},
                           [self](const boost::system::error_code &ec,
-                                 tcp::resolver::iterator endpoint_it) {
+                                 const tcp::resolver::results_type& endpoints) {
                             if (ec) {
                               self->not_connected(ec);
                               return;
                             }
-
-                            self->start_connect(endpoint_it);
+                            // random endpoint
+                            auto size = endpoints.size();
+                            auto index = std::rand() % size;
+                            auto iter = endpoints.begin();
+                            for (size_t i = 0; i < index; ++i) {
+                                ++iter;
+                            }
+                            self->start_connect(iter);
                           });
 
   deadline_.async_wait(std::bind(&session_impl::handle_deadline, self));
