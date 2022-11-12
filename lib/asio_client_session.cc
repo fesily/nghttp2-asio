@@ -144,6 +144,10 @@ void session::read_timeout(const boost::posix_time::time_duration &t) {
   impl_->read_timeout(t);
 }
 
+void session::ping_tick(const boost::posix_time::time_duration &t) {
+  impl_->ping_tick(t);
+}
+
 priority_spec::priority_spec(const int32_t stream_id, const int32_t weight,
                              const bool exclusive)
     : valid_(true) {

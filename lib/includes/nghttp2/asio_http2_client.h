@@ -198,6 +198,9 @@ public:
   // Sets read timeout, which defaults to 60 seconds.
   void read_timeout(const boost::posix_time::time_duration &t);
 
+  // Sets ping tick, which defaults to 30 seconds.
+  void ping_tick(const boost::posix_time::time_duration &t);
+
   // Shutdowns connection.
   void shutdown() const;
 

@@ -47,6 +47,7 @@ session_impl::session_impl(
       deadline_(io_service),
       connect_timeout_(connect_timeout),
       read_timeout_(boost::posix_time::seconds(60)),
+      ping_tick_(boost::posix_time::seconds(30)),
       ping_(io_service),
       session_(nullptr),
       data_pending_(nullptr),
@@ -106,7 +107,7 @@ void session_impl::handle_deadline() {
 void handle_ping2(const boost::system::error_code &ec, int) {}
 
 void session_impl::start_ping() {
-  ping_.expires_from_now(boost::posix_time::seconds(30));
+  ping_.expires_from_now(ping_tick_);
   ping_.async_wait(std::bind(&session_impl::handle_ping, shared_from_this(),
                              std::placeholders::_1));
 }
@@ -756,6 +757,10 @@ bool session_impl::stopped() const { return stopped_; }
 
 void session_impl::read_timeout(const boost::posix_time::time_duration &t) {
   read_timeout_ = t;
+}
+
+void session_impl::ping_tick(const boost::posix_time::time_duration &t){
+  ping_tick_ = t;
 }
 
 } // namespace client
